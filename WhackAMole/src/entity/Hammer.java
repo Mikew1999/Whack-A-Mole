@@ -20,7 +20,6 @@ public class Hammer extends Entity {
     };
 
     public void paint(Graphics2D g2) {
-        System.out.println(position);
         g2.drawImage(image, position.xPos, position.yPos, null);
     };
 }

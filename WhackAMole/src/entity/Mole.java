@@ -3,18 +3,30 @@ package entity;
 import java.awt.Image;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
 public class Mole extends Entity {
-    public boolean hidden = false;
     public Image currentImage;
+    public long imageLastUpdated = System.nanoTime();
+    public int visibility = 0;  // 0 / 50 / 100
+    private Image[] images = new Image[3];
+    
 
-    public Mole(Position pos) throws IOException {
+    public Mole(Position pos, Image[] images) {
         super(pos);
-        this.currentImage = ImageIO.read(getClass().getResourceAsStream("/res/mole0.png")).getScaledInstance(50, 50, 0);
+        this.images = images;
+        this.currentImage = this.images[0];
     }
 
-    public void hide() {
-        this.hidden = true;
+    public void changeVisibility(int visibility) throws IOException {
+        if (visibility == 0) {
+            this.currentImage = this.images[0];
+        } else if (visibility == 50) {
+            this.currentImage = this.images[1];
+        } else if (visibility == 100) {
+            this.currentImage = this.images[2];
+        };
+    };
+
+    public void hide() throws IOException {
+        this.currentImage = this.images[0];
     };
 }

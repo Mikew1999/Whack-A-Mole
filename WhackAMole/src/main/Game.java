@@ -8,7 +8,7 @@ import main.handlers.MoleHandler;
 import main.handlers.MouseHandler;
 import main.handlers.ScoreHandler;
 
-public class Game implements IUpdate, Runnable {
+public class Game {
 
     public boolean gameRunning = true;
 
@@ -17,7 +17,7 @@ public class Game implements IUpdate, Runnable {
     public GamePanel gamePanel;
     public MouseHandler mouseHandler;
     public Hammer hammer;
-    public int FPS = 30;
+    public int FPS = 60;
 
     public Game()  {
         this.scoreHandler = new ScoreHandler();
@@ -30,17 +30,8 @@ public class Game implements IUpdate, Runnable {
         this.moleHandler = new MoleHandler(gamePanel);
     }
 
-    @Override
-    public void run() {
-    };
-
     public void startGame() {
         if (this.gamePanel == null) return;
         this.gamePanel.startGameThread();
     };
-
-    public void update() {
-        
-    };
-
 }

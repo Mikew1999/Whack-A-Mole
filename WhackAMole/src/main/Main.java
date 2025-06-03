@@ -25,6 +25,7 @@ public class Main {
         Game game = new Game();
         GamePanel gamePanel = new GamePanel(game);
         game.setupGamePanel(gamePanel);
+        game.startGame();
         window.add(gamePanel);
         window.pack();
         window.setLocationRelativeTo(null);

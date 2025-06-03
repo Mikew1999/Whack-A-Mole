@@ -37,15 +37,33 @@ public class GamePanel extends JPanel implements Runnable, IUpdate {
 
     @Override
     public void run() {
+        double drawInterval = 1000000000/game.FPS;  // 1 second / 60
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
+        while (game.gameRunning) {
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawInterval;
+            lastTime = currentTime;
+
+            if (delta >= 1) {
+                update();
+                repaint();
+                delta--;
+            }
+        };
     }
 
     @Override
-    public void update() {};
+    public void update() {
+        game.moleHandler.update();
+    };
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        g2.drawString("Score: " + game.scoreHandler.getScore(), screenWidth - 60, 20);
         this.game.moleHandler.paint(g2);
         this.game.hammer.paint(g2);
         g2.dispose();

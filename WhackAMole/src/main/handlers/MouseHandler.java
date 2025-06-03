@@ -19,15 +19,13 @@ public class MouseHandler implements MouseInputListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        game.hammer.position.xPos = e.getX();
+        game.hammer.position.xPos = e.getX() - 25;
         game.hammer.position.yPos = e.getY();
-        game.gamePanel.update();
-        game.gamePanel.repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse pressed: " + e.getPoint());
+        game.moleHandler.checkHitMole(e.getX(), e.getY());
     }
 
     @Override
