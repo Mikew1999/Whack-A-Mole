@@ -7,11 +7,11 @@ import javax.imageio.ImageIO;
 
 public class Mole extends Entity {
     public boolean hidden = false;
-    public Image image;
+    public Image currentImage;
 
     public Mole(Position pos) throws IOException {
         super(pos);
-        this.image = ImageIO.read(getClass().getResourceAsStream("/res/mole.png")).getScaledInstance(50, 50, 0);
+        this.currentImage = ImageIO.read(getClass().getResourceAsStream("/res/mole0.png")).getScaledInstance(50, 50, 0);
     }
 
     public void hide() {

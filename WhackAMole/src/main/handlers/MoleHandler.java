@@ -8,7 +8,7 @@ import entity.Position;
 import main.GamePanel;
 
 public class MoleHandler {
-    
+
     public Mole[] moles = new Mole[9];
     public GamePanel gamePanel;
 
@@ -43,7 +43,7 @@ public class MoleHandler {
 
     public void paint(Graphics2D g2) {
         for (Mole mole : this.moles) {
-            g2.drawImage(mole.image, mole.position.xPos, mole.position.yPos, null);
+            g2.drawImage(mole.currentImage, mole.position.xPos, mole.position.yPos, null);
         }
     };
 }
