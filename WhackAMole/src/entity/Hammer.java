@@ -11,7 +11,7 @@ public class Hammer extends Entity {
     
     public Hammer(Position pos) throws IOException {
         super(pos);
-        this.image = ImageIO.read(getClass().getResourceAsStream("/res/basicHammer.png"));
+        this.image = ImageIO.read(getClass().getResourceAsStream("/res/basicHammer.png")).getScaledInstance(100, 100, 0);
     };
 
     @Override

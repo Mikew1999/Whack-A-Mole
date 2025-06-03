@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable, IUpdate {
         this.setBackground(Color.LIGHT_GRAY);
         this.setDoubleBuffered(true);
         this.addMouseMotionListener(game.mouseHandler);
+        this.addMouseListener(game.mouseHandler);
         // this.addKeyListener();
         this.setFocusable(true);
     };
@@ -43,9 +44,9 @@ public class GamePanel extends JPanel implements Runnable, IUpdate {
 
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("repainting");
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        this.game.moleHandler.paint(g2);
         this.game.hammer.paint(g2);
         g2.dispose();
     }

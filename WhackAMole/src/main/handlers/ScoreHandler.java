@@ -1,4 +1,4 @@
-package main;
+package main.handlers;
 
 public class ScoreHandler {
     private int score;
