@@ -66,40 +66,53 @@ public class MoleHandler implements IUpdate {
 
     @Override
     public void update() {
-        try {
-            // check for hit moles
-            if (hitMole != -1) {
-                gamePanel.game.scoreHandler.incrementScore();
-                moles[hitMole].changeVisibility(0);
-                if (hittableMoles[0] == hitMole) hittableMoles[0] = pickRandom(hitMole);
-                if (hittableMoles[1] == hitMole) hittableMoles[1] = pickRandom(hitMole);
-                hitMole = -1;
+        // check for hit moles
+        if (hitMole != -1) {
+            gamePanel.game.scoreHandler.incrementScore();
+            setVisibility(hitMole, 0);
+            setNewActive(hitMole);
+            hitMole = -1;
+        }
+
+        long actionTime = System.nanoTime();
+        long upTime = 1500000000;
+
+        for (int i = 0; i < 9; i++) {
+            final int index = i;
+            if (!IntStream.of(hittableMoles).anyMatch(x -> x == index)) {
+                setVisibility(index, 0);
+                continue;
             }
 
-            for (int i = 0; i < 9; i++) {
-                final int index = i;
-                if (IntStream.of(hittableMoles).anyMatch(x -> x == index)) {
-                    moles[i].changeVisibility(100);
-                } else {
-                    moles[i].changeVisibility(0);
-                }
-                
+            if (moles[index].visibility == 100 && moles[index].imageLastUpdated < (actionTime - upTime)) {
+                setVisibility(index, 0);
+                setNewActive(index);
+            } else {
+                setVisibility(index, 100);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(0);
         }
+    };
+
+    public void setNewActive(int index) {
+        if (hittableMoles[0] == index) hittableMoles[0] = pickRandom(index);
+        if (hittableMoles[1] == index) hittableMoles[1] = pickRandom(index);
+    }
+
+    public void setVisibility(int moleIndex, int visibility) {
+        if ((moleIndex < 0 || moleIndex > 8) || (visibility != 0 && visibility != 50 && visibility != 100)) return;
+        moles[moleIndex].changeVisibility(visibility);
     };
 
     public void checkHitMole(int xPos, int yPos) {
         int moleHit = -1;
+        int baseOffset = 35;
         for (int index : hittableMoles) {
             Position molePosition = moles[index].position;
             if (index == -1) continue;
-            int leftPos = molePosition.xPos - 35;
-            int rightPos = molePosition.xPos + 35;
-            int topPos = molePosition.yPos - 35;
-            int bottomPos = molePosition.yPos + 35;
+            int leftPos = molePosition.xPos - baseOffset;
+            int rightPos = molePosition.xPos + baseOffset;
+            int topPos = molePosition.yPos - baseOffset;
+            int bottomPos = molePosition.yPos + baseOffset;
 
             if (
                 xPos >= leftPos &&
